@@ -33,6 +33,22 @@ export const completeTodo = createAsyncThunk(
   }
 )
 
+export const deleteTodo = createAsyncThunk(
+  'todo/deleteTodo',
+  async (args) => {
+    try {
+      const { id } = args;
+      let response = await fetch(`${config.API_URL}/task/${id}`, {
+        method: "delete",
+      });
+      const todos = await response.json();
+      return todos.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
+
 const initialState = {
   isLoading: true,
   todos: [],
@@ -75,6 +91,18 @@ export const todosSlice = createSlice({
       state.todos = newTodos;
     })
     builder.addCase(completeTodo.rejected, (state) => {
+      state.isLoading = false;
+    })
+    // deleteTodo
+    builder.addCase(deleteTodo.pending, (state) => {
+      state.isLoading = true;
+    })
+    builder.addCase(deleteTodo.fulfilled, (state, action) => {
+      console.log(action)
+      state.isLoading = false;
+      state.todos = action.payload;
+    })
+    builder.addCase(deleteTodo.rejected, (state) => {
       state.isLoading = false;
     })
   },

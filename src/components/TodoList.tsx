@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllTodos, setTodos, completeTodo } from '../features/todos/todosSlice';
-
+import { fetchAllTodos, completeTodo, deleteTodo } from '../features/todos/todosSlice';
 import Link from 'next/link'
 
 function TodoList() {
@@ -15,11 +14,13 @@ function TodoList() {
   return(
     <>
       <h1>TodoList</h1>
+      <Link href="/task">Agregar tarea</Link>
       <ul>
         {!isLoading && todos.map(todo => (
           <li key={todo.id}>
             <input type="checkbox" name="isComplete" checked={todo.isComplete} onChange={() => dispatch(completeTodo(todo))} />
             <Link href={`/task/${todo.id}`}>{todo.name}</Link>
+            <button onClick={() => dispatch(deleteTodo(todo))}>Eliminar tarea</button>
           </li>
         ))}
       </ul>
