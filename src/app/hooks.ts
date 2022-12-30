@@ -22,6 +22,7 @@ export const useForm =
         }),
         defaultValues
       )
+      console.log(data)
     await handler(data)
     form.reset()
   }
