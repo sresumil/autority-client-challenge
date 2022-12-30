@@ -1,10 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import counterReducer from '../features/counter-reference-redux/counterSlice'
+import todosReducer from '../features/todos/todosSlice'
+import todoReducer from '../features/todo/todoSlice'
 
 export function makeStore() {
   return configureStore({
-    reducer: { counter: counterReducer },
+    reducer: {
+      counter: counterReducer,
+      todos: todosReducer,
+      todo: todoReducer,
+    },
   })
 }
 

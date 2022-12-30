@@ -1,20 +1,18 @@
 import { NextPage } from "next";
-import TaskForm from '../../components/form';
+import TodoForm from "../../components/TodoForm";
 
-const TaskPage: NextPage = ({task}) => {
+const TaskPage: NextPage = ({id}) => {
   return (
       <>
-        <TaskForm initialValues={task.data} />
+        <TodoForm todoId = {id}/>
       </>
   )
 }
 
 export async function getServerSideProps({params}) {
   const { id } = params;
-  const task = await fetch(`http://api:4000/task/${id}`);
-  const taskJson = await task.json();
   return {
-    props: { task: taskJson }
+    props: { id }
   }
 }
 
